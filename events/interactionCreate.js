@@ -8,15 +8,16 @@ module.exports = class extends Event {
   }
 
   async run(client, interaction) {
-    if(interaction.isAutocomplete()) this.autoComplete(client, interaction);
-    if(interaction.isCommand()) this.slashCommand(client, interaction);
+    if(interaction.type == 4) this.autoComplete(client, interaction);
+    if(interaction.type == 2) this.slashCommand(client, interaction);
   }
 
   async autoComplete(client, interaction) {
-    const currentValue = interaction.options.getFocused();
-    if(currentValue.length < 1) return interaction.respond([]);
-    const ctx = new CommandContext({client, interaction, commandType: 'interaction'});
-    return command._entrypoint(ctx, 'autocomplete');
+    const cmd = client.commands.get(interaction.commandName);
+    if(!cmd) return interaction.respond([]);
+
+    const ctx = new Context({client, interaction, commandType: 'interaction'});
+    return cmd._entrypoint(ctx, 'autocomplete');
   }
 
   async slashCommand(client, interaction) {

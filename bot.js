@@ -3,11 +3,11 @@ require('module-alias/register');
 const BotClient = require('@structures/bot/Client.js');
 const client = new BotClient({ 
   intents: [
-    'GUILDS', 'GUILD_BANS',
-    'GUILD_EMOJIS_AND_STICKERS',
-    'GUILD_INTEGRATIONS', 'GUILD_WEBHOOKS',
-    'GUILD_INVITES', 'DIRECT_MESSAGES',
-    'GUILD_MESSAGES', 'GUILD_MESSAGE_REACTIONS',
+    'Guilds', 'GuildBans',
+    'GuildEmojisAndStickers',
+    'GuildIntegrations', 'GuildWebhooks', 
+    'GuildInvites', 'DirectMessages',
+    'GuildMessages', 'GuildMessageReactions'
   ]
 });
 

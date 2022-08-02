@@ -23,18 +23,13 @@ module.exports = class Context {
 
     this.database = this.client.database;
     this.services = this.client.services;
-    this.color = this.client.color;
 
     this.discord = this.client.discord;
-    this.MessageEmbed = this.discord.MessageEmbed;
-    this.Permissions = this.discord.Permissions.FLAGS;
+    this.MessageEmbed = this.discord.EmbedBuilder;
+    this.Permissions = this.discord.PermissionsBitField.Flags;
 
     this.pagify = this.pagify;
     this.sendMsg = this.sendMsg;
-  }
-
-  hasPerm(permission, user = this.guild.me) {
-    return user.permissions.has(this.discord.Permissions.FLAGS[permission], true);
   }
 
   async sendMsg(content = null, options = {}) {

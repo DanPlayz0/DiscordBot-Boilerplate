@@ -6,15 +6,16 @@ module.exports = class Webhook {
 
   async send(content, options) {
     if (!content) throw ReferenceError('content is not defined');
-    if (typeof content == 'object' && !(content instanceof this.client.discord.MessageEmbed)) { options = content; content = undefined; }
-    if (options instanceof this.client.discord.MessageEmbed) options = { embeds: [options] };
+    if (typeof content == 'object' && !(content instanceof this.client.discord.EmbedBuilder)) { options = content; content = undefined; }
+    if (options instanceof this.client.discord.EmbedBuilder) options = { embeds: [options] };
 
     const newOptions = Object.assign({
       content: typeof content === 'string' ? content : undefined,
-      embeds: content instanceof this.client.discord.MessageEmbed ? [content] : [],
+      embeds: content instanceof this.client.discord.EmbedBuilder ? [content] : [],
       allowedMentions: { repliedUser: false, parse: [] },
     }, options);
 
-    return this.webhook.send(newOptions);
+    if(this.webhook) return this.webhook.send(newOptions);
+    return true;
   }
 }

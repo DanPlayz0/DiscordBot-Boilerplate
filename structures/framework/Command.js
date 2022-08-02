@@ -56,7 +56,7 @@ module.exports = class Command {
         ctx.client.webhooks.error.send(`**${ctx.client.user.username} - Command Error:**\n\`\`\`\n${err.stack}`.slice(0,1995)+'\`\`\`')
         ctx.sendMsg(new ctx.MessageEmbed()
           .setTitle('Oops')
-          .setColor(ctx.color.error)
+          .setColor('Red')
           .setDescription(`The error that occured has been logged into our systems. If this is repeative, report it to DanPlayz#7757 at <${ctx.client.config.supportServerInvite}>.\n\`\`\`js\n${err.message}\`\`\``))
       }
     } else if(commandType === 'autocomplete') {
@@ -76,7 +76,7 @@ module.exports = class Command {
         ctx.client.webhooks.error.send({content: `**${ctx.client.user.username} - Command Error:**\n\`\`\`\n${err.stack}`.slice(0,1995)+'\`\`\`', allowedMentions: { parse: [] } })
         ctx.sendMsg(new ctx.MessageEmbed()
           .setTitle('Oops')
-          .setColor(ctx.color.error)
+          .setColor('Red')
           .setDescription(`The error that occured has been logged into our systems. If this is repeative, report it to DanPlayz#7757 at <${ctx.client.config.supportServerInvite}>.\n\`\`\`js\n${err.message}\`\`\``))
       }
     } else return ctx.sendMsg(`This seems to be a broken command. Please report this to DanPlayz#7757 at <${ctx.client.config.supportServerInvite}>.`);
