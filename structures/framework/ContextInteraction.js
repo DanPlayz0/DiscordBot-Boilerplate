@@ -22,7 +22,7 @@
     this.services = this.client.services;
 
     this.discord = this.client.discord;
-    this.MessageEmbed = this.discord.EmbedBuilder;
+    this.EmbedBuilder = this.MessageEmbed = this.discord.EmbedBuilder;
     this.Permissions = this.discord.PermissionsBitField.Flags;
 
     this.pagify = this.pagify;
