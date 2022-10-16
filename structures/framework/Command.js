@@ -4,7 +4,7 @@ module.exports = class Command {
     this.location = null;
     this.fileName = null;
     this.enabled = "enabled" in options ? options.enabled : true;
-    
+
     this.commandData = {
       name: null,
       description: options.description,
@@ -25,7 +25,7 @@ module.exports = class Command {
   }
 
   // This function will run everytime the slash command is ran
-  runInteraction(ctx) {
+  run(ctx) {
     throw new Error('Command runInteraction method not implemented');
   }
 
@@ -47,33 +47,33 @@ module.exports = class Command {
 
   // Error Catching Functions
   async _entrypoint(ctx, commandType) {
-    if(commandType === 'slash') {
+    if (commandType === 'slash') {
       await ctx.interaction.deferReply();
       try {
-        await this.runInteraction(ctx);
+        await this.run(ctx);
       } catch (err) {
         console.error(err);
-        ctx.client.webhooks.error.send(`**${ctx.client.user.username} - Command Error:**\n\`\`\`\n${err.stack}`.slice(0,1995)+'\`\`\`')
+        ctx.client.webhooks.error.send(`**${ctx.client.user.username} - Command Error:**\n\`\`\`\n${err.stack}`.slice(0, 1995) + '\`\`\`')
         ctx.sendMsg(new ctx.MessageEmbed()
           .setTitle('Oops')
           .setColor('Red')
           .setDescription(`The error that occured has been logged into our systems. If this is repeative, report it to DanPlayz#7757 at <${ctx.client.config.supportServerInvite}>.\n\`\`\`js\n${err.message}\`\`\``))
       }
-    } else if(commandType === 'autocomplete') {
+    } else if (commandType === 'autocomplete') {
       try {
         const value = await this.runAutocomplete(ctx);
         ctx.interaction.respond(value);
       } catch (err) {
         console.error(err);
-        ctx.client.webhooks.error.send(`**${ctx.client.user.username} - Command Autocomplete Error:**\n\`\`\`\n${err.stack}`.slice(0,1995)+'\`\`\`')
+        ctx.client.webhooks.error.send(`**${ctx.client.user.username} - Command Autocomplete Error:**\n\`\`\`\n${err.stack}`.slice(0, 1995) + '\`\`\`')
         ctx.interaction.respond([]);
       }
-    } else if(commandType === 'message') {
+    } else if (commandType === 'message') {
       try {
         await this.runMessage(ctx);
       } catch (err) {
         console.error(err);
-        ctx.client.webhooks.error.send({content: `**${ctx.client.user.username} - Command Error:**\n\`\`\`\n${err.stack}`.slice(0,1995)+'\`\`\`', allowedMentions: { parse: [] } })
+        ctx.client.webhooks.error.send({ content: `**${ctx.client.user.username} - Command Error:**\n\`\`\`\n${err.stack}`.slice(0, 1995) + '\`\`\`', allowedMentions: { parse: [] } })
         ctx.sendMsg(new ctx.MessageEmbed()
           .setTitle('Oops')
           .setColor('Red')
