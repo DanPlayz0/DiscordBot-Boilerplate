@@ -45,7 +45,7 @@ module.exports = class Loader {
 
       props.location = cmdPath;
       props.fileName = cmdName;
-      props.commandData.name = cmdName.replace(/\..+$/,'')
+      props.commandData.name = cmdName.replace(/\..+$/, '')
 
       if (props.init) props.init(this.client);
 
@@ -115,15 +115,15 @@ module.exports = class Loader {
       if (props.conf.enabled === false) return;
       props.conf.location = evtPath;
       props.conf.fileName = evtName;
-      props.conf.name = evtName.replace(/\..+$/,'')
+      props.conf.name = evtName.replace(/\..+$/, '')
 
       if (props.init) {
         props.init(this.client);
       }
-      
+
       this.client.events.set(props.conf.name, props);
-      
-      if(props.conf.ws) this.client.ws.on(props.conf.name, (...args) => props.run(this.client, ...args));
+
+      if (props.conf.ws) this.client.ws.on(props.conf.name, (...args) => props.run(this.client, ...args));
       else this.client.on(props.conf.name, (...args) => props.run(this.client, ...args));
 
       console.log(`Loading event ${props.conf.name}`);
@@ -149,11 +149,11 @@ module.exports = class Loader {
     }
 
     if (event.shutdown) await event.shutdown(this.client);
-    
+
     this.client.removeAllListeners(evtName);
     this.client.ws.removeAllListeners(evtName);
     this.client.events.delete(evtName);
-    
+
 
     delete require.cache[require.resolve(path.resolve(evtPath, event.conf.fileName))];
     return false;

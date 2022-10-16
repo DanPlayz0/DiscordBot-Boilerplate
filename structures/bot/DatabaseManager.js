@@ -7,11 +7,11 @@ module.exports = class DatabaseManager {
   }
 
   async init() {
-    if(!this.client.config.mongo_uri) throw Error('Missing Mongo URI');
+    if (!this.client.config.mongo_uri) throw Error('Missing Mongo URI');
     this.raw = await mongoDb.MongoClient.connect(this.client.config.mongo_uri, {}).catch(err => (console.error(err), null));
-    if(!this.raw) throw Error('Mongo URI Failed');
+    if (!this.raw) throw Error('Mongo URI Failed');
     const urlTokens = /\w\/([^?]*)/g.exec(this.client.config.mongo_uri)
-    if(!urlTokens) throw Error('Missing Table Name');
+    if (!urlTokens) throw Error('Missing Table Name');
     this.db = this.raw.db(urlTokens && urlTokens[1]);
     return true;
   }

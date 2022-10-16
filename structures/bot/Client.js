@@ -18,11 +18,8 @@ module.exports = class BotClient extends Discord.Client {
     this.moment = require('moment'); require("moment-timezone"); require("moment-duration-format");
     this.duration = require("humanize-duration");
     this.hashids = require('hashids');
-    
+
     // Miscelaneous
-    this.services = {
-      
-    };
     this.framework = {
       messageContext: require("@structures/framework/ContextMessage"),
       messageArguments: require("@structures/framework/MessageArguments"),
