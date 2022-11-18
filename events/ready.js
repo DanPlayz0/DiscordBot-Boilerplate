@@ -18,7 +18,7 @@ module.exports = class extends Event {
     this.activityInterval = setInterval(setupInit, 90000);
 
     // Setup the website.
-    if(!client.shard || !client.shardId) {
+    if((!client.shard || !client.shardId) && client.config.restapi.port != null) {
       client.site = new (require("@structures/restapi/index.js"))(client);
       client.site.listen(client.config.restapi.port);
     }

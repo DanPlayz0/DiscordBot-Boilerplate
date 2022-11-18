@@ -10,6 +10,7 @@ module.exports = {
     port: 6379,
   },
 
+  // Set 'restapi.port' to null to disable the REST API.
   restapi: {
     port: 3000,
   },
