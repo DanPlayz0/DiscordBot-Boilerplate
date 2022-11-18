@@ -19,7 +19,7 @@ module.exports = class extends Command {
     })
 
     // The line below defines text based commands to run the 'run' function
-    this.runMessage = this.helpMenu;
+    this.runMessage = this.run;
   }
 
   async run(ctx) {
