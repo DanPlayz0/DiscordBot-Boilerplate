@@ -4,9 +4,11 @@ module.exports = class DatabaseManager {
     this.client = client;
     this.raw = null;
     this.db = null;
+    this.isDisabled = this.client.config.mongo_uri == null;
   }
 
   async init() {
+    if (this.isDisabled) return;
     if (!this.client.config.mongo_uri) throw Error('Missing Mongo URI');
     this.raw = await mongoDb.MongoClient.connect(this.client.config.mongo_uri, {}).catch(err => (console.error(err), null));
     if (!this.raw) throw Error('Mongo URI Failed');
@@ -16,12 +18,27 @@ module.exports = class DatabaseManager {
     return true;
   }
 
-  insertOne(collection, ...args) { return this.db.collection(collection).insertOne(...args); }
-  updateOne(collection, ...args) { return this.db.collection(collection).updateOne(...args); }
+  insertOne(collection, ...args) {
+    if (this.isDisabled) throw "[Function Disabled] Database URI was set to null.";
+    return this.db.collection(collection).insertOne(...args);
+  }
+  updateOne(collection, ...args) {
+    if (this.isDisabled) throw "[Function Disabled] Database URI was set to null.";
+    return this.db.collection(collection).updateOne(...args);
+  }
 
-  find(collection, ...args) { return this.db.collection(collection).find(...args)?.toArray(); }
-  findOne(collection, ...args) { return this.db.collection(collection).findOne(...args); }
+  find(collection, ...args) {
+    if (this.isDisabled) throw "[Function Disabled] Database URI was set to null.";
+    return this.db.collection(collection).find(...args)?.toArray();
+  }
+  findOne(collection, ...args) {
+    if (this.isDisabled) throw "[Function Disabled] Database URI was set to null.";
+    return this.db.collection(collection).findOne(...args);
+  }
 
-  deleteOne(collection, ...args) { return this.db.collection(collection).deleteOne(...args); }
+  deleteOne(collection, ...args) {
+    if (this.isDisabled) throw "[Function Disabled] Database URI was set to null.";
+    return this.db.collection(collection).deleteOne(...args);
+  }
 
 }
