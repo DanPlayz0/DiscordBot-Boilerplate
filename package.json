@@ -11,7 +11,8 @@
     "module-alias": "^2.2.2",
     "moment": "^2.29.4",
     "moment-duration-format": "^2.3.2",
-    "moment-timezone": "^0.5.38"
+    "moment-timezone": "^0.5.38",
+    "mongodb": "^4.12.1"
   },
   "name": "discordbot-boilerplate",
   "version": "1.0.0",
