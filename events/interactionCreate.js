@@ -38,7 +38,7 @@ module.exports = class extends Event {
 
     const command = client.commands.get(interaction.commandName);
     if(!command) return;
-    client.webhooks.command.send({content: `${ctx.author.tag} \`${ctx.author.id}\` used **${interaction.commandName}** in ${interaction.guild.name} \`${interaction.guild.id}\` ||/${interaction.commandName} ${interaction.options._hoistedOptions.map(m => `${m.name}:${m.value}`).join(' ')}`.slice(0,1995)+'||', allowedMentions: { parse: [] } })
+    client.webhooks.command.send({content: `${ctx.author.tag} \`${ctx.author.id}\` used **${interaction.commandName}** in ${interaction.guild.name} \`${interaction.guild.id}\` ||/${interaction.commandName}${interaction.options._group?` ${interaction.options._group}`:''}${interaction.options._subcommand?` ${interaction.options._subcommand}`:''} ${interaction.options._hoistedOptions.map(m => `${m.name}:${m.value}`).join(' ')}`.slice(0,1995)+'||', allowedMentions: { parse: [] } })
     return command._entrypoint(ctx, 'slash');
   }
 }
