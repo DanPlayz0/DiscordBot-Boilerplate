@@ -16,6 +16,7 @@ module.exports = class Command {
       cooldown: options?.cooldown ?? 1,
       aliases: options?.aliases ?? [],
       category: options?.category ?? 'Other',
+      access: options?.access ?? 'user',
     }
 
     this.permissions = {

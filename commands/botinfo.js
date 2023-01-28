@@ -5,6 +5,7 @@ module.exports = class extends Command {
       enabled: true,
       description: 'Get information about the bot.',
       options: [],
+      access: "developer", // Only admins (configured in config) can use this command.
       category: "General",
     })
   }

@@ -15,6 +15,7 @@ module.exports = class extends Command {
           autocomplete: true,
         }
       ],
+      access: "user", // Any user can access this.
       category: "General",
     })
 

@@ -28,6 +28,7 @@ module.exports = class BotClient extends Discord.Client {
     this.redis = this.config.redis.host == null ? ({ get: () => Error("Disabled"), setex: () => Error("Disabled") }) : new (require('ioredis'))(`redis://${this.config.redis.host}:${this.config.redis.port}`);
     this.webhooks = new (require('@structures/webhooks/WebhookManager.js'))(this);
     this.loader = new (require('./Loader.js'))(this);
+    this.accesslevels = new (require('../handlers/accessLevels.js'))(this);
 
     this.database.init();
     this.loader.start();
