@@ -28,14 +28,16 @@ module.exports = class extends Command {
       
     if (ctx.args.getString('command')) return this.commandInfo(ctx, ctx.args.getString('command'), embed);
     
+    const categories = [...new Set(ctx.client.commands.map(x => x.conf.category))];
+
     embed
       .setAuthor({ name: ctx.client.user.username, iconURL: ctx.client.user.displayAvatarURL({ dynamic: true, format: 'png' }) })
       .setDescription(`You can do \`${ctx.prefix}help [command]\` for more info on a command\nYou can also join the [support server](${ctx.client.config.supportServerInvite}) for more information.`)
-      .setFields([
-        { name: '➤ General', value: ctx.client.commands.filter(m => m.conf.category == "General").map(m => `\`${m.commandData.name}\``).join(' ') || 'None', inline: false }
-      ])
+      .setFields(categories.map((x) => ({
+        name: `${x.toProperCase()}`, value: ctx.client.commands.filter(m => m.conf.category == x).map(m => `\`${m.commandData.name}\``).join(' ') || 'None', inline: false
+      })))
       .setFooter({text: "This bot is using a boilerplate from github.com/DanPlayz0/DiscordBot-Boilerplate"});
-    ctx.sendMsg(embed)
+    ctx.sendMsg(embed);
   }
   async commandInfo(ctx, command, embed) {
     if (!ctx.client.commands.has(command)) {
