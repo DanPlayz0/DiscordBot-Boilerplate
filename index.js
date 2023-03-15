@@ -11,3 +11,12 @@ try {
   console.log(e);
   process.exit(1);
 }
+
+process.on('SIGINT', () => {
+  manager.broadcastEval((c)=>c.stop())
+  process.exit(0);
+})
+process.on('SIGTERM', () => {
+  manager.broadcastEval((c)=>c.stop())
+  process.exit(0);
+})

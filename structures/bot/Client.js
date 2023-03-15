@@ -33,4 +33,11 @@ module.exports = class BotClient extends Discord.Client {
     this.database.init();
     this.loader.start();
   }
+
+  async stop() {
+    await this.database.raw.close();
+    await this.redis.disconnect();
+    await this.destroy();
+    process.exit(0);
+  }
 }
