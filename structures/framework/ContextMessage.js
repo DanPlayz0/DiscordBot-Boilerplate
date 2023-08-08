@@ -1,3 +1,5 @@
+const { EmbedBuilder, PermissionsBitField } = require('discord.js');
+
 /**
  * This class provides a object of options for the run method
  */
@@ -24,9 +26,8 @@ module.exports = class Context {
     this.database = this.client.database;
     this.services = this.client.services;
 
-    this.discord = this.client.discord;
-    this.MessageEmbed = this.discord.EmbedBuilder;
-    this.Permissions = this.discord.PermissionsBitField.Flags;
+    this.EmbedBuilder = EmbedBuilder;
+    this.Permissions = PermissionsBitField.Flags;
 
     this.pagify = this.pagify;
     this.sendMsg = this.sendMsg;
@@ -34,15 +35,15 @@ module.exports = class Context {
 
   async sendMsg(content = null, options = {}) {
     if (!content) throw ReferenceError('content is not defined');
-    if (typeof content === 'object' && !(content instanceof this.MessageEmbed)) { options = content; content = undefined; }
-    if (options instanceof this.MessageEmbed) options = { embeds: [options] };
+    if (typeof content === 'object' && !(content instanceof this.EmbedBuilder)) { options = content; content = undefined; }
+    if (options instanceof this.EmbedBuilder) options = { embeds: [options] };
 
     let message;
     if(options.message) message = options.message, delete options.message;
 
     const newOptions = Object.assign({
       content: typeof content === 'string' ? content : undefined,
-      embeds: content instanceof this.MessageEmbed ? [content] : [],
+      embeds: content instanceof this.EmbedBuilder ? [content] : [],
     }, options);
 
     let msg;
@@ -57,7 +58,7 @@ module.exports = class Context {
     if (!Array.isArray(embeds)) embeds = [embeds];
 
     let pages = embeds.length, currentPage = (options && options.currentPage) || 0, descriptions = (options && options.descriptions) || [];
-    embeds.filter(m => m instanceof this.MessageEmbed).map((embed, i) => embed.setFooter(`Requested by ${this.author.username} • Page ${i + 1} of ${pages}${embed?.footer?.text ? `\n${embed.footer.text}` : ''}`));
+    embeds.filter(m => m instanceof this.EmbedBuilder).map((embed, i) => embed.setFooter(`Requested by ${this.author.username} • Page ${i + 1} of ${pages}${embed?.footer?.text ? `\n${embed.footer.text}` : ''}`));
 
     let selectMenu = [];
     embeds.map((_a, i) => selectMenu.push({ label: `Page ${i + 1}`, description: descriptions.length >= i ? descriptions[i] : undefined, value: `page_${i}`, default: i == 0 }));

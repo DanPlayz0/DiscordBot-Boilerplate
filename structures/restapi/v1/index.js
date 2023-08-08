@@ -1,4 +1,5 @@
 const { Router } = require("express");
+const { version:discordVersion } = require('discord.js');
 
 const route = Router();
 
@@ -23,7 +24,7 @@ route.get('/stats', async (req, res, next) => {
     redisStats = {
       version: {
         nodejs: process.version,
-        discordjs: "v"+req.client.discord.version,
+        discordjs: "v"+discordVersion,
       },
       shards: shards,
       total: {
