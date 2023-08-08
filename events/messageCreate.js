@@ -9,7 +9,16 @@ module.exports = class extends Event {
 
   async run(client, message) {
     if (message.partial) await message.fetch();
-    this.commandUsage(client, message);
+    const messageCommands = false; // Set to 'true' for message commands, 'false' for slash commands only
+    if (messageCommands) this.commandUsage(client, message);
+    else this.messageMention(client, message);
+  }
+
+  async messageMention(client, message) {
+    if (message.author.bot) return;
+
+    if (new RegExp(`^<@!?${client.user.id}>`, 'i'))
+      return ctx.sendMsg(new ctx.EmbedBuilder().setColor('Blurple').setFooter({text: "This is a slash command bot."}).setDescription("**Help Command:** `/help`"));
   }
 
   async commandUsage(client, message) {
