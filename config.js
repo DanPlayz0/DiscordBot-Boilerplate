@@ -1,17 +1,18 @@
-const private = require('./config-private.js');
+require('dotenv').config();
+
 module.exports = {
   // Bot Token
-  token: private.token,
+  token: process.env.TOKEN,
 
   // Bot Administators (Access to Admin Dash & System Commands)
   admins: ['209796601357533184', '229285505693515776'],
   
   // Database Crap (MongoDB & Redis)
-  mongo_uri: private.mongo_uri,
+  mongo_uri: process.env.MONGODB_URI,
   redis: {
-    host: private.redis?.host,
-    port: private.redis?.port ?? 6379,
-    prefix: "DISCORDBOT:"
+    host: process.env.REDIS_HOST,
+    port: parseInt(process.env.REDIS_PORT ?? "6379"),
+    prefix: process.env.REDIS_PREFIX ?? "DISCORDBOT:",
   },
   
   // Support server. (For the "dashboard.example/join")
@@ -22,22 +23,16 @@ module.exports = {
   
   // Restful API
   restapi: {
-    port: private.restapi?.port ?? 3000, 
-  },
-
-  // Links
-  links: {
-    terms: "https://example.com/docs/terms",
-    privacy: "https://example.com/docs/privacy",
+    port: parseInt(process.env.RESTFUL_PORT ?? "3000"),
   },
   
   // Bot Logging (Webhooks)
-  webhooks: [
-    { name: "shard", id: private.webhooks?.shard?.id, token: private.webhooks?.shard?.token },
-    { name: "error", id: private.webhooks?.error?.id, token: private.webhooks?.error?.token },
-    { name: "command", id: private.webhooks?.command?.id, token: private.webhooks?.command?.token },
-    { name: "guilds", id: private.webhooks?.guilds?.id, token: private.webhooks?.guilds?.token },
-  ],
+  webhooks: {
+    shard: { url: process.env.SHARD_WEBHOOK_URL },
+    error: { url: process.env.ERROR_WEBHOOK_URL },
+    guilds: { url: process.env.GUILD_WEBHOOK_URL },
+    command: { url: process.env.COMMAND_WEBHOOK_URL },
+  },
 
   // Bot settings (Default)
   settings: {
