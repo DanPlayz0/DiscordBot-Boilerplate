@@ -27,7 +27,7 @@ module.exports = class Command {
 
   // This function will run everytime the slash command is ran
   run(ctx) {
-    throw new Error('Command runInteraction method not implemented');
+    throw new Error('Command run method not implemented');
   }
 
   // This function will fire when the command has an option with the flag autocomplete.
